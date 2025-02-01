@@ -32,7 +32,6 @@
 ![alt text](image-2.png)
 FRONT PAGE OF THE WEBSITE
 ## VIDEO
-## TEAM CONTRIBUTIONS
-### Templates - Sherin Saju
-### app.py - Saniya Amstrong
-### meal_planner - Sarangi Sujith
+
+https://github.com/user-attachments/assets/84e70eaf-7a02-4993-bd43-b9b71dcb1c65
+
