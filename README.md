@@ -35,3 +35,7 @@ FRONT PAGE OF THE WEBSITE
 
 https://github.com/user-attachments/assets/84e70eaf-7a02-4993-bd43-b9b71dcb1c65
 
+## TEAM CONTRIBUTION
+### SARANGI - MEAL PLANNER
+### SANIYA - TEMPLATE
+### SHERIN - APP.PY
