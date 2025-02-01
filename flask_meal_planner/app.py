@@ -30,12 +30,12 @@ def calculate():
     result = calculate_calories(age, weight, height, gender, activity_level, goal)
 
     # Get user restrictions
-    restrictions = request.form['restrictions'].lower().split(',')
+    restriction = request.form['restrictions'].lower()
 
     # Get meal plan
-    meal_plan = generate_meal_plan(restrictions, result)
+    meal_plan = generate_meal_plan(restriction, result)
 
-    return render_template('meal_plan.html', meal_plan=meal_plan, restrictions=restrictions)
+    return render_template('meal_plan.html', meal_plan=meal_plan)
 
 # Function to calculate calories (same as your original function)
 def calculate_calories(age, weight, height, gender, activity_level, goal):
@@ -68,21 +68,26 @@ def calculate_calories(age, weight, height, gender, activity_level, goal):
         return "Invalid goal! Choose 'maintain', 'lose', or 'gain'."
     return calories
 
-# Function to generate meal plan (same as your original function, but with MySQL integration)
-def generate_meal_plan(restrictions, result):
-    # Fetch meals from the database based on restrictions
+# Function to generate meal plan (with breakfast, lunch, dinner for 7 days)
+def generate_meal_plan(restriction, result):
+    # Fetch meals from the database based on restriction
     cursor = mysql.connection.cursor()
-    restrictions_placeholder = ', '.join(["%s"] * len(restrictions))
-    query = f"SELECT * FROM meals WHERE LOWER(restrictions) LIKE {restrictions_placeholder}"
-    
-    cursor.execute(query, restrictions)
+    query = f"SELECT * FROM meals WHERE LOWER(category) IN ('breakfast', 'lunch', 'dinner') AND LOWER(restrictions) LIKE %s"
+    cursor.execute(query, (f"%{restriction}%",))  # Use LIKE to filter by restriction
     meals = cursor.fetchall()
 
-    # Sample selection and meal plan generation (simplified for now)
+    # Prepare the meal plan for 7 days, 3 meals per day
     meal_plan = {}
-    for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]:
-        daily_meal = random.choice(meals)
-        meal_plan[day] = daily_meal
+    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    categories = ['breakfast', 'lunch', 'dinner']
+
+    for day in days_of_week:
+        daily_meals = {}
+        for category in categories:
+            meal_for_category = random.choice([meal for meal in meals if meal[2].lower() == category])
+            daily_meals[category] = meal_for_category
+        meal_plan[day] = daily_meals
+
     return meal_plan
 
 if __name__ == '__main__':
