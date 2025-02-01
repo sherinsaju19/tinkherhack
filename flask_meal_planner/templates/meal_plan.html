@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Meal Plan</title>
+</head>
+<body>
+    <h1>Weekly Meal Plan</h1>
+    <p><strong>Dietary Restrictions:</strong> {{ restrictions }}</p>
+    
+    {% for day, meals in meal_plan.items() %}
+        <h2>{{ day }}</h2>
+        <ul>
+            <li><strong>Breakfast:</strong> {{ meals[0] }}</li>
+            <li><strong>Lunch:</strong> {{ meals[1] }}</li>
+            <li><strong>Dinner:</strong> {{ meals[2] }}</li>
+        </ul>
+    {% endfor %}
+</body>
+</html>

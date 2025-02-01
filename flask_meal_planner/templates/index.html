@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+</head>
+<body>
+    <h1>Enter Your Details</h1>
+    <form action="/calculate" method="POST">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" name="weight" required><br><br>
+
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" name="height" required><br><br>
+
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select><br><br>
+
+        <label for="activity_level">Activity Level:</label>
+        <select name="activity_level" id="activity_level">
+            <option value="sedentary">Sedentary</option>
+            <option value="light">Light</option>
+            <option value="moderate">Moderate</option>
+            <option value="active">Active</option>
+            <option value="very active">Very Active</option>
+        </select><br><br>
+
+        <label for="goal">Goal:</label>
+        <select name="goal" id="goal">
+            <option value="maintain">Maintain</option>
+            <option value="lose">Lose</option>
+            <option value="gain">Gain</option>
+        </select><br><br>
+
+        <label for="restrictions">Dietary Restrictions (comma-separated):</label>
+        <input type="text" id="restrictions" name="restrictions"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
