@@ -34,3 +34,4 @@
 ### CODE OF THE APPLICATION
 ![alt text](image-2.png)
 FRONT PAGE OF THE WEBSITE
+## VIDEO
