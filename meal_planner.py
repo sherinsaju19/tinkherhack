@@ -30,9 +30,12 @@ def calculate_calories(age, weight, height, gender, activity_level, goal):
     return calories
 
 def get_user_restrictions():
-    restrictions_input = input("Enter your dietary restrictions (comma-separated, e.g., vegan, gluten free, dairy free, nut free). If none, just press enter: ")
-    restrictions = {r.strip().lower() for r in restrictions_input.split(",") if r.strip()}
-    return restrictions
+    restrictions_input = input("Enter your dietary restrictions (comma-separated, e.g., vegan, gluten free, dairy free, nut free). If none,enter None: ")
+    if None:
+        pass
+    else:
+        restrictions = {r.strip().lower() for r in restrictions_input.split(",") if r.strip()}
+        return restrictions
 
 def filter_meals(meals, restrictions):
     if not restrictions:
@@ -57,7 +60,6 @@ def generate_meal_plan(user_restrictions, total_calories):
     Generates a weekly meal plan (breakfast, lunch, and dinner) based on the user's dietary restrictions and calorie target.
     """
     # Define expanded meal options with dietary tags and calorie counts.
-    import pandas as pd
     breakfasts = [
         {"name": "Oatmeal with fruits and nuts", "restrictions": ["vegan", "vegetarian", "dairy free", "gluten free"], "calories": 350},
         {"name": "Greek yogurt with granola and berries", "restrictions": ["gluten free", "nut free"], "calories": 300},
@@ -123,17 +125,6 @@ def generate_meal_plan(user_restrictions, total_calories):
         {"name": "Chicken stir-fry with broccoli, carrots, and rice", "restrictions": ["gluten free", "nut free"], "calories": 700},
         {"name": "Vegetable and chickpea tagine with couscous", "restrictions": ["vegan", "vegetarian", "gluten free", "dairy free"], "calories": 650},
     ]
-    df_breakfasts = pd.DataFrame(breakfast)
-    df_lunches = pd.DataFrame(lunches)
-    df_dinners = pd.DataFrame(dinners)
-
-    print("Breakfast:")
-    print(df_breakfast.to_string(index=False))
-    print("\nLunches:")
-    print(df_lunches.to_string(index=False))
-    print("\nDinners:")
-    print(df_dinners.to_string(index=False))
-
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     meal_plan = {}
     
@@ -141,32 +132,29 @@ def generate_meal_plan(user_restrictions, total_calories):
         day_plan = {}
         daily_calories = 0
         
-        # Filter meal options for each category based on user restrictions.
-        available_breakfasts = filter_meals(breakfasts, user_restrictions)
-        available_lunches = filter_meals(lunches, user_restrictions)
-        available_dinners = filter_meals(dinners, user_restrictions)
-        
-        # Randomly select a meal (or use a fallback message if none available), considering the calorie requirement.
-        b_name, b_cal = select_meal(available_breakfasts, "breakfast", result)
-        l_name, l_cal = select_meal(available_lunches, "lunch", result)
-        d_name, d_cal = select_meal(available_dinners, "dinner", result)
-        
-        day_plan["Breakfast"] = b_name
-        day_plan["Lunch"] = l_name
-        day_plan["Dinner"] = d_name
-        daily_calories += b_cal + l_cal + d_cal
+    breakfast_calories = (1/3) * total_calories
+    dinner_calories = (1/3) * total_calories
+    lunch_calories = total_calories-(breakfast_calories+dinner_calories)
 
+    # Apply a tolerance of +/- 200 for selecting each meal
+    available_breakfasts = filter_meals(breakfasts, user_restrictions)
+    available_lunches = filter_meals(lunches, user_restrictions)
+    available_dinners = filter_meals(dinners, user_restrictions)
+
+
+    # Breakfast selection
+    b_name, b_cal = select_meal(available_breakfasts, "breakfast", breakfast_calories, tolerance=200)
+    # Lunch selection
+    l_name, l_cal = select_meal(available_lunches, "lunch", lunch_calories, tolerance=200)
+    # Dinner selection
+    d_name, d_cal = select_meal(available_dinners, "dinner", dinner_calories, tolerance=200)
     # Return the meal plan
     meal_plan = {
         "Breakfast": {"name": b_name, "calories": b_cal},
         "Lunch": {"name": l_name, "calories": l_cal},
-        "Dinner": {"name": d_name, "calories": d_cal},
-        "Total Calories": cumulative_calories
-    }
+        "Dinner": {"name": d_name, "calories": d_cal}    }
 
     return meal_plan
-
-
 
 def print_meal_plan(plan, restrictions):
     restrictions_str = ", ".join(restrictions) if restrictions else "None"
