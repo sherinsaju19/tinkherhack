@@ -80,6 +80,7 @@ def generate_meal_plan(user_restrictions, result):
     Generates a weekly meal plan (breakfast, lunch, and dinner) based on the user's dietary restrictions and calorie target.
     """
     # Define expanded meal options with dietary tags and calorie counts.
+    import pandas as pd
     breakfasts = [
         {"name": "Oatmeal with fruits and nuts", "restrictions": ["vegan", "vegetarian", "dairy free", "gluten free"], "calories": 350},
         {"name": "Greek yogurt with granola and berries", "restrictions": ["gluten free", "nut free"], "calories": 300},
@@ -112,6 +113,16 @@ def generate_meal_plan(user_restrictions, result):
         {"name": "Eggplant Parmesan with a side salad", "restrictions": ["vegetarian", "nut free"], "calories": 560},
         {"name": "Spaghetti squash with pesto and cherry tomatoes", "restrictions": ["vegan", "vegetarian", "gluten free", "nut free"], "calories": 490}
     ]
+    df_breakfasts = pd.DataFrame(breakfast)
+    df_lunches = pd.DataFrame(lunches)
+    df_dinners = pd.DataFrame(dinners)
+
+    print("Breakfast:")
+    print(df_breakfast.to_string(index=False))
+    print("\nLunches:")
+    print(df_lunches.to_string(index=False))
+    print("\nDinners:")
+    print(df_dinners.to_string(index=False))
     
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     meal_plan = {}
