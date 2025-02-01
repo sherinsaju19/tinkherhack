@@ -20,13 +20,10 @@
 #### html
 #### Pavilion hp laptop(windows 11)
 #### Toshiba
-### IMPLIMENTATION
-#### 
 ## INSTALLATION
 ### Visual Studio Code
 ### github
 ### MySQL
-## RUN
 ### screenshot
 ![alt text](image.png) 
 ### MAIN CODE OF THE PROJECT
@@ -35,4 +32,7 @@
 ![alt text](image-2.png)
 FRONT PAGE OF THE WEBSITE
 ## VIDEO
-### file:///C:/Users/sheri/Documents/WhatsApp%20Video%202025-02-01%20at%2018.32.37_7a8d36b1.mp4
+## TEAM CONTRIBUTIONS
+### Templates - Sherin Saju
+### app.py - Saniya Amstrong
+### meal_planner - Sarangi Sujith
